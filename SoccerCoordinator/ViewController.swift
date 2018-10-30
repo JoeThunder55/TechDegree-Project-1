@@ -10,15 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
-  var league = [["Name":"Joe Smith", "Height":"42", "Experience":"Yes", "Guardian":"Jim and Jan Smith"], ["Name":"Jill Tanner", "Height":"36", "Experience":"Yes", "Guardian":"Clara Tanner"], ["Name":"Bill Bon", "Height":"36", "Experience":"Yes", "Guardian":"Sara and Jenny Bon"], ["Name":"Eva Gordon", "Height":"45", "Experience":"No", "Guardian":"Wendy and Mike Gordon"], ["Name":"Matt Gill", "Height":"40", "Experience":"No", "Guardian":"Charles and Sylvia Gill"], ["Name":"Kimmy Stein", "Height":"41", "Experience":"No", "Guardian":"Bill and Hillary Stein"], ["Name":"Sammy Adams", "Height":"45", "Experience":"No", "Guardian":"Jeff Adams"], ["Name":"Karl Saygan", "Height":"42", "Experience":"Yes", "Guardian":"Heather Bledsoe"], ["Name":"Suzane Greenberg", "Height":"44", "Experience":"Yes", "Guardian":"Henrietta Dumas"], ["Name":"Sal Dali", "Height":"41", "Experience":"No", "Guardian":"Gala Dali"], ["Name":"Joe Kavalier", "Height":"39", "Experience":"No", "Guardian":"Sam and Elaine Kavalier"], ["Name":"Ben Finkelstein", "Height":"44", "Experience":"No", "Guardian":"Aaron and Jill Finkelstein"], ["Name":"Diego Soto", "Height":"41", "Experience":"Yes", "Guardian":"Robin and Sarika Soto"], ["Name":"Chloe Alaska", "Height":"47", "Experience":"No", "Guardian":"David and Jamie Alaska"], ["Name":"Arnold Willis", "Height":"43", "Experience":"No", "Guardian":"Claire Willis"], ["Name":"Phillip Helm", "Height":"44", "Experience":"Yes", "Guardian":"Thomas Helm and Eva Jones"], ["Name":"Les Clay", "Height":"42", "Experience":"Yes", "Guardian":"Wynonna Brown"], ["Name":"Herschel Krustofski", "Height":"45", "Experience":"Yes","Guardian":"Hyman and Rachel Krustofski"], ["Name":"Jean-Luc Picard", "Height":"45", "Experience":"Yes", "Guardian":"Maurice Picard and Yvette Gessard"], ["Name":"William T. Riker", "Height":"48", "Experience":"No", "Guardian":"Kyle and Betty Riker"]]
+  var league = [["Name":"Joe Smith", "Height":"42", "Experience":"Yes", "Guardian":"Jim and Jan Smith"], ["Name":"Jill Tanner", "Height":"36", "Experience":"Yes", "Guardian":"Clara Tanner"], ["Name":"Bill Bon", "Height":"36", "Experience":"Yes", "Guardian":"Sara and Jenny Bon"], ["Name":"Eva Gordon", "Height":"45", "Experience":"No", "Guardian":"Wendy and Mike Gordon"], ["Name":"Matt Gill", "Height":"40", "Experience":"No", "Guardian":"Charles and Sylvia Gill"], ["Name":"Kimmy Stein", "Height":"41", "Experience":"No", "Guardian":"Bill and Hillary Stein"], ["Name":"Sammy Adams", "Height":"45", "Experience":"No", "Guardian":"Jeff Adams"], ["Name":"Karl Saygan", "Height":"42", "Experience":"Yes", "Guardian":"Heather Bledsoe"], ["Name":"Suzane Greenberg", "Height":"44", "Experience":"Yes", "Guardian":"Henrietta Dumas"], ["Name":"Sal Dali", "Height":"41", "Experience":"No", "Guardian":"Gala Dali"], ["Name":"Joe Kavalier", "Height":"39", "Experience":"No", "Guardian":"Sam and Elaine Kavalier"], ["Name":"Ben Finkelstein", "Height":"44", "Experience":"No", "Guardian":"Aaron and Jill Finkelstein"], ["Name":"Diego Soto", "Height":"41", "Experience":"Yes", "Guardian":"Robin and Sarika Soto"], ["Name":"Chloe Alaska", "Height":"47", "Experience":"No", "Guardian":"David and Jamie Alaska"], ["Name":"Arnold Willis", "Height":"43", "Experience":"No", "Guardian":"Claire Willis"], ["Name":"Phillip Helm", "Height":"44", "Experience":"Yes", "Guardian":"Thomas Helm and Eva Jones"], ["Name":"Les Clay", "Height":"42", "Experience":"Yes", "Guardian":"Wynonna Brown"], ["Name":"Herschel Krustofski", "Height":"45", "Experience":"Yes","Guardian":"Hyman and Rachel Krustofski"], ["Name":"Jean-Luc Picard", "Height":"45", "Experience":"No", "Guardian":"Maurice Picard and Yvette Gessard"], ["Name":"William T. Riker", "Height":"48", "Experience":"Yes", "Guardian":"Kyle and Betty Riker"], ["Name":"Wesley Crusher", "Height":"43", "Experience":"Yes", "Guardian":"Beverly Crusher"], ["Name":"Data", "Height":"46", "Experience":"No", "Guardian":"Dr. Noonien Soong"]]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dividePlayers()
         divideTeams(firstString: experiencedPlayers, secondString: inexperiencedPlayers)
-//        inform(guardians: guardians, teamDragons: teamDragons, teamSharks: teamSharks, teamRaptors: teamRaptors, allPlayers: allPlayers, teamNames: teamNames, timeSlots: timeSlots)
-        // Do any additional setup after loading the view, typically from a nib.
+        inform(guardians: guardians, teamDragons: teamDragons, teamSharks: teamSharks, teamRaptors: teamRaptors, teamNames: teamNames, timeSlots: timeSlots)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,37 +28,31 @@ class ViewController: UIViewController {
     
     
   
-    
-    var experiencedPlayersNumber = 0
-    var inexperiencedPlayersNumber = 0
-    
-    
-    
-    
-    
-    
-    
     // MARK: - Player Roster
     
     var allPlayers = [String]()
     
     var teamNames = [String]()
     
-    var teamDragons = [String]()
+    var teamDragons = [[String:String]]()
     
-    var teamSharks = [String]()
+    var teamSharks = [[String:String]]()
     
-    var teamRaptors = [String]()
+    var teamRaptors = [[String:String]]()
     
     var timeSlots = [String]()
     
     //   MARK: - Divide the Teams
     
-    var experiencedPlayers = [String]()
+    var experiencedPlayers = [[String:String]]()
     
-    var inexperiencedPlayers = [String]()
+    var inexperiencedPlayers = [[String:String]]()
     
     var guardians = [String]()
+    
+    var inexperiencedPlayersNumber = 0
+    var experiencedPlayersNumber = 0
+    var supplementalNumber = 0
     
     func dividePlayers() {
         
@@ -69,11 +63,11 @@ class ViewController: UIViewController {
             for (key, value) in player {
                 if (value == "No") {
                     
-                    inexperiencedPlayers.append(player["Name"]!)
+                    inexperiencedPlayers.append(player)
                     
                     guardians.append(player["Guardian"]!)
                 } else if (value == "Yes") {
-                    experiencedPlayers.append(player["Name"]!)
+                    experiencedPlayers.append(player)
                     
                     guardians.append(player["Guardian"]!)
                 } else {
@@ -88,119 +82,189 @@ class ViewController: UIViewController {
         print(allPlayers)
         print("Experienced Players")
         print(experiencedPlayers)
+        print("Inexperienced Players")
+        print(inexperiencedPlayers)
     }
     
-    func divideTeams(firstString: [String], secondString: [String]) {
+    func divideTeams(firstString: [[String:String]], secondString: [[String:String]]) {
         
-        repeat {
+//        allPlayers.count - inexperiencedPlayers.count
+        
+        while teamDragons.count != (inexperiencedPlayers.count / 3) {
             
-            teamDragons.append(firstString[inexperiencedPlayersNumber])
+            teamDragons.append(secondString[inexperiencedPlayersNumber])
             teamNames.append("Dragons")
             timeSlots.append("March 17th, @ 1 PM")
             inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
-        } while teamDragons.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 6)
+        }
         
-        repeat {
+       while teamRaptors.count != (inexperiencedPlayers.count / 3) {
             
-            teamRaptors.append(firstString[inexperiencedPlayersNumber])
+            teamRaptors.append(secondString[inexperiencedPlayersNumber])
             teamNames.append("Raptors")
             timeSlots.append("March 18th, @ 1 PM")
             inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
-        } while teamRaptors.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 6)
+        }
         
-        repeat {
+        while teamSharks.count != (inexperiencedPlayers.count / 3)  {
             
-            teamSharks.append(firstString[inexperiencedPlayersNumber])
+            teamSharks.append(secondString[inexperiencedPlayersNumber])
             teamNames.append("Sharks")
             timeSlots.append("March 17th, @ 3 PM")
             inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
-        } while teamSharks.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 6)
+        }
         
-        repeat {
+       while supplementalNumber != (experiencedPlayers.count / 3) {
             
-            teamDragons.append(secondString[experiencedPlayersNumber])
+            teamDragons.append(firstString[experiencedPlayersNumber])
             teamNames.append("Dragons")
             timeSlots.append("March 17th, @ 1 PM")
             experiencedPlayersNumber = experiencedPlayersNumber + 1
-        } while teamDragons.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 3)
+            supplementalNumber = supplementalNumber + 1
+        
+        }
+        supplementalNumber = 0
        
-        repeat {
+        while supplementalNumber != (experiencedPlayers.count / 3) {
             
-            teamRaptors.append(secondString[experiencedPlayersNumber])
+            teamRaptors.append(firstString[experiencedPlayersNumber])
             teamNames.append("Raptors")
             timeSlots.append("March 18th, @ 1 PM")
             experiencedPlayersNumber = experiencedPlayersNumber + 1
-        } while teamRaptors.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 3)
+            supplementalNumber = supplementalNumber + 1
+        }
         
+        supplementalNumber = 0
         
-        repeat {
+       while supplementalNumber != (experiencedPlayers.count / 3) {
             
-            teamSharks.append(secondString[experiencedPlayersNumber ])
+            teamSharks.append(firstString[experiencedPlayersNumber])
             teamNames.append("Sharks")
             timeSlots.append("March 17th, @ 3 PM")
             experiencedPlayersNumber = experiencedPlayersNumber + 1
-        } while teamSharks.count != ((inexperiencedPlayers.count + experiencedPlayers.count) / 3)
+            supplementalNumber = supplementalNumber + 1
+        }
         
-        if (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && (team){
-            var unevenNumber = 5
+        if (teamRaptors.count + teamSharks.count + teamDragons.count) != league.count {
+         
             
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 5 {
+            var inexperiencedRemaining =  inexperiencedPlayers.count - inexperiencedPlayersNumber
+            
+            var experiencedRemaining = experiencedPlayers.count - experiencedPlayersNumber
+            
+    
+                while inexperiencedRemaining == 5 {
+                    
+                    teamSharks.append(secondString[inexperiencedPlayersNumber])
+                    teamNames.append("Sharks")
+                    timeSlots.append("March 17th, @ 3 PM")
+                    inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
+                    inexperiencedRemaining = inexperiencedRemaining - 1
+                }
+                
+                while inexperiencedRemaining == 4 {
+                    
+                   
+                    
+                    teamRaptors.append(secondString[inexperiencedPlayersNumber])
+                    teamNames.append("Raptors")
+                    timeSlots.append("March 18th, @ 1 PM")
+                    inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
+                    inexperiencedRemaining = inexperiencedRemaining - 1
+                }
+                
+                while inexperiencedRemaining == 3  {
+                    
+                    teamSharks.append(secondString[inexperiencedPlayersNumber])
+                    teamNames.append("Sharks")
+                    timeSlots.append("March 17th, @ 3 PM")
+                    inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
+                    inexperiencedRemaining = inexperiencedRemaining - 1
+                    
+                    
+                }
+                
+                while inexperiencedRemaining == 2   {
+                  
+                    teamDragons.append(secondString[inexperiencedPlayersNumber])
+                    teamNames.append("Dragons")
+                    timeSlots.append("March 17th, @ 3 PM")
+                    inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
+                    inexperiencedRemaining = inexperiencedRemaining - 1
+                   
+                }
+                
+                while inexperiencedRemaining == 1   {
+                    
+               
+                    
+                    teamRaptors.append(secondString[inexperiencedPlayersNumber])
+                    teamNames.append("Raptors")
+                    timeSlots.append("March 18th, @ 1 PM")
+                    inexperiencedPlayersNumber = inexperiencedPlayersNumber + 1
+                    inexperiencedRemaining = inexperiencedRemaining - 1
+                }
+            
+      
+            while experiencedRemaining == 5   {
+                teamRaptors.append(firstString[experiencedPlayersNumber])
+                teamNames.append("Raptors")
+                timeSlots.append("March 17th, @ 3 PM")
+                experiencedPlayersNumber = experiencedPlayersNumber + 1
+                experiencedRemaining = experiencedRemaining - 1
+               
+        }
+            
+            while experiencedRemaining == 4   {
                 
                 teamDragons.append(firstString[experiencedPlayersNumber])
                 teamNames.append("Dragons")
-                timeSlots.append("March 17th, @ 1 PM")
+                timeSlots.append("March 17th, @ 3 PM")
                 experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
+                experiencedRemaining = experiencedRemaining - 1
             }
             
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 4  {
+            while experiencedRemaining == 3   {
                 
                 teamRaptors.append(firstString[experiencedPlayersNumber])
                 teamNames.append("Raptors")
-                timeSlots.append("March 18th, @ 1 PM")
-               experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
+                timeSlots.append("March 17th, @ 3 PM")
+                experiencedPlayersNumber = experiencedPlayersNumber + 1
+                experiencedRemaining = experiencedRemaining - 1
             }
             
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 3  {
+            while experiencedRemaining == 2  {
                 
                 teamSharks.append(firstString[experiencedPlayersNumber])
                 teamNames.append("Sharks")
                 timeSlots.append("March 17th, @ 3 PM")
-               experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
+                experiencedPlayersNumber = experiencedPlayersNumber + 1
+                experiencedRemaining = experiencedRemaining - 1
             }
             
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 2 {
+            while experiencedRemaining == 1   {
                 
                 teamDragons.append(firstString[experiencedPlayersNumber])
                 teamNames.append("Dragons")
-                timeSlots.append("March 17th, @ 1 PM")
-                experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
-            }
-            
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 1  {
-                
-                teamRaptors.append(firstString[experiencedPlayersNumber])
-                teamNames.append("Raptors")
-                timeSlots.append("March 18th, @ 1 PM")
-                experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
-            }
-            
-            while (inexperiencedPlayersNumber + experiencedPlayersNumber) != league.count && unevenNumber == 0  {
-                
-                teamSharks.append(firstString[experiencedPlayersNumber])
-                teamNames.append("Sharks")
                 timeSlots.append("March 17th, @ 3 PM")
                 experiencedPlayersNumber = experiencedPlayersNumber + 1
-                unevenNumber = unevenNumber - 1
+                experiencedRemaining = experiencedRemaining - 1
             }
             
-            
-            experiencedPlayersNumber = 0
-            inexperiencedPlayersNumber = 0
+            print("Inexperienced Players")
+            print(inexperiencedPlayers)
+            print("experienced Players")
+            print(experiencedPlayers)
+            print("Guardians")
+            print(guardians)
+            print("The Raptors")
+            print(teamRaptors)
+            print("The Sharks")
+            print(teamSharks)
+            print("The Dragons")
+            print(teamDragons)
+            print("Team Names")
+            print(teamNames)
             
         }  else {
             
@@ -209,20 +273,7 @@ class ViewController: UIViewController {
             
         }
         
-        print("Inexperienced Players")
-        print(inexperiencedPlayers)
-        print("experienced Players")
-        print(experiencedPlayers)
-        print("Guardians")
-        print(guardians)
-        print("The Raptors")
-        print(teamRaptors)
-        print("The Sharks")
-        print(teamSharks)
-        print("The Dragons")
-        print(teamDragons)
-        print("Team Names")
-        print(teamNames)
+       
         
         
     }
@@ -230,9 +281,9 @@ class ViewController: UIViewController {
     
     
     
-    func inform(guardians letter: [String], teamDragons dragons: [String], teamSharks sharks: [String], teamRaptors raptors: [String], allPlayers: [String], teamNames: [String], timeSlots: [String]) {
+    func inform(guardians letter: [String], teamDragons dragons: [[String:String]], teamSharks sharks: [[String:String]], teamRaptors raptors: [[String:String]], teamNames: [String], timeSlots: [String]) {
         
-        var iterateNumber = 0
+var iterateNumber = 0
         
         for message in letter {
             
